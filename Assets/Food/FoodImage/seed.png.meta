@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 390b91306a66ef2438c600cbfc69d433
+guid: 6e8ef2a24db5b4fc090a042137ecf85f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -295182368756486792
-    second: udon01_0
+      213: 3124949146848436715
+    second: seed_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: udon01_0
+      name: seed_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1200
-        height: 630
+        x: 226
+        y: 152
+        width: 572
+        height: 720
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 87daf46133d47ebf0800000000000000
-      internalID: -295182368756486792
+      spriteID: be1af0f31bc0e5b20800000000000000
+      internalID: 3124949146848436715
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      udon01_0: -295182368756486792
+      seed_0: 3124949146848436715
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

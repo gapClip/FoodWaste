@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fe2f75d07b836fc428183d06022da80a
+guid: 78285a47d33414b3b8464d38c5c80bf3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8370601321967228845
-    second: tofu_0
+      213: -2844531463381759980
+    second: meat_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tofu_0
+      name: meat_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 40
-        width: 384
-        height: 285
+        x: 117
+        y: 257
+        width: 790
+        height: 510
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da795409d895a2470800000000000000
-      internalID: 8370601321967228845
+      spriteID: 41845bc74b13688d0800000000000000
+      internalID: -2844531463381759980
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      tofu_0: 8370601321967228845
+      meat_0: -2844531463381759980
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
