@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TestFood04
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
   foodName: test04
-  foodSprite: {fileID: 8024170800127884669, guid: 8d04a28f523c449a4ac8dcd60b0565b7, type: 3}
+  foodSprite: {fileID: 21300000, guid: 6e8ef2a24db5b4fc090a042137ecf85f, type: 3}
   amount: 20
