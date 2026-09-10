@@ -1,22 +1,29 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class TestAdd : MonoBehaviour
 {
-    public Inventory inventory;
-    public FoodData testFood;
-     private InputAction jumpAction;
-     private FoodSlotUI foodSlotUI;
+    [SerializeField] private FoodData testFood;
 
-void Start()
+    private Image image;
+
+    private void Awake()
     {
-     jumpAction = InputSystem.actions.FindAction("Jump");   
+        image = GetComponent<Image>();
     }
-    public void addFood()
+
+    public void SetFood(FoodData food)
     {
-        // if (jumpAction.triggered)
-        // {
-             inventory.AddFood(testFood);
-        // }
+        testFood = food;
+
+        if (image != null)
+        {
+            image.sprite = food.foodSprite;
+        }
+    }
+
+    public FoodData GetFood()
+    {
+        return testFood;
     }
 }

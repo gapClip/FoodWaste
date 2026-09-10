@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87f9a25999e45d4db98ab4b9184dce8, type: 3}
+  m_Name: TestFood08
+  m_EditorClassIdentifier: Assembly-CSharp::FoodData
+  foodName: "\u30D1\u30B5\u9B5A"
+  foodSprite: {fileID: 21300000, guid: 57520b91b98971a4e90a48bc730c823d, type: 3}
+  amount: 5
+  category: 2
+  texture: 1

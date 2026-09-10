@@ -10,8 +10,11 @@ public static class ResultData
     public static float totalLeftover = 0;
 
     // その日の各モンスターの満腹度
-    public static Dictionary<MonsterData, float> monsterFullness
-            = new Dictionary<MonsterData, float>();
+    public static List<MonsterData> monsterOrder
+    = new List<MonsterData>();
+
+public static Dictionary<MonsterData, float> monsterFullness
+    = new Dictionary<MonsterData, float>();    
     public static void ResetScene()
     {
         sceneLeftover = 0;

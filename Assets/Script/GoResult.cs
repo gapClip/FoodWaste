@@ -1,13 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GoResult : ChangeScene
 {
-    MonsterData monsterData;
     override public void ChangeSceneTo()
     {
-        MonsterStatus[] monsters = FindObjectsByType<MonsterStatus>(
-            FindObjectsSortMode.None);
+        MonsterStatus[] monsters =
+            FindObjectsByType<MonsterStatus>(
+                FindObjectsSortMode.None);
+
+        // 固定順に並べる
+        monsters = monsters
+            .OrderBy(monster => monster.monsterData.resultOrder)
+            .ToArray();
 
         ResultData.monsterFullness.Clear();
 
