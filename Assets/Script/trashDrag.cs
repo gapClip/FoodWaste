@@ -11,7 +11,7 @@ public class trashDrag : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private Vector3 offset;
-
+[SerializeField] private GameObject smokePrefab;
     void Start()
     {
         mainCamera = Camera.main;
@@ -81,6 +81,13 @@ void Incineration()
     if (!isDragging && isInBonfire && !isIncinerating)
     {
         isIncinerating = true;
+
+         // 煙を発生
+            Instantiate(
+                smokePrefab,
+                transform.position,
+                Quaternion.identity
+            );
 
         StartCoroutine(FadeOut());
     }

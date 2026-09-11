@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 221246227}
   - component: {fileID: 221246226}
   - component: {fileID: 221246225}
-  - component: {fileID: 221246224}
+  - component: {fileID: 221246228}
   m_Layer: 5
   m_Name: next
   m_TagString: Untagged
@@ -248,19 +248,6 @@ RectTransform:
   m_AnchoredPosition: {x: 450, y: 270}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &221246224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221246222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d557d8eb882df74eaa8e586cdd8b004, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GoGiveFood
-  sceneName: GiveFood
 --- !u!114 &221246225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,8 +292,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 221246224}
-        m_TargetAssemblyTypeName: GoGiveFood, Assembly-CSharp
+      - m_Target: {fileID: 221246228}
+        m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
         m_MethodName: ChangeSceneTo
         m_Mode: 1
         m_Arguments:
@@ -355,6 +342,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 221246222}
   m_CullTransparentMesh: 1
+--- !u!114 &221246228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221246222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899f9fc251a9a4a4e9e1943f8af9b5bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChangeScene
+  sceneName: Incineration
 --- !u!1 &439402604
 GameObject:
   m_ObjectHideFlags: 0

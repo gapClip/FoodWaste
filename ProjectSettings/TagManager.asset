@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - Bonfire
+  - Trash
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Monster
-  - 
+  - trash
   - 
   - 
   - 
