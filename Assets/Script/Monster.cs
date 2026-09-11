@@ -3,7 +3,6 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     private MonsterStatus monsterStatus;
-    private float overflow = 0;
     private Animator animator;
     [SerializeField] private GameObject trash;
 
@@ -32,6 +31,8 @@ public class Monster : MonoBehaviour
             PlayFoodReaction(item);
             monsterStatus.currentAmountEat += item.food.amount * item.selectedCount;
 
+            int overflow = 0;
+
             if (monsterStatus.currentAmountEat > monsterStatus.maxAmountEat)
             {
                 overflow = monsterStatus.currentAmountEat - monsterStatus.maxAmountEat;
@@ -41,13 +42,12 @@ public class Monster : MonoBehaviour
                 SpawnTrash();
             }
 
+            GameState.AddFeedTrash(overflow);
+
             Debug.Log("現在の食べた量: " + monsterStatus.currentAmountEat);
             Debug.Log("残した量: " + overflow);
-            Debug.Log("満足度: " + MonsterStatus.satisfaction);
-            Debug.Log("成長度: " + MonsterStatus.growth);
-
-            ResultData.sceneLeftover += overflow;
-            ResultData.totalLeftover += overflow;
+            Debug.Log("満足度: " + monsterStatus.State.satisfaction);
+            Debug.Log("成長度: " + monsterStatus.State.growthPoints);
 
             item.ownedCount -= item.selectedCount;
             item.selectedCount = 0;
@@ -61,37 +61,39 @@ public class Monster : MonoBehaviour
             monsterStatus.monsterData.GetPreference(
                 item.food.category, item.food.texture);
 
+        MonsterState state = monsterStatus.State;
+
         // 大好き
         if (preference == FoodPreference.大好き)
         {
             animator.SetTrigger("love");
             Debug.Log("大好き！");
-            MonsterStatus.satisfaction += 3*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount*1.5f;
+            state.satisfaction += 3*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount*1.5f;
         }
         // 大嫌い
         else if (preference == FoodPreference.大嫌い)
         {
             animator.SetTrigger("dislike");
             Debug.Log("嫌い！");
-            MonsterStatus.satisfaction -= 2*item.selectedCount;
+            state.satisfaction -= 2*item.selectedCount;
         }
         // 好き
         else if (preference == FoodPreference.好き)
         {
             animator.SetTrigger("like");
             Debug.Log("好き！");
-            MonsterStatus.satisfaction += 1*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount*1.2f;
+            state.satisfaction += 1*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount*1.2f;
         }
         // 普通
         else
         {
             animator.SetTrigger("normal");
             Debug.Log("普通！");
-            MonsterStatus.satisfaction += 0*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount;
+            state.satisfaction += 0*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount;
         }
     }
 

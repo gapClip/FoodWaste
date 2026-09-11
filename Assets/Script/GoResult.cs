@@ -1,27 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Linq;
 
 public class GoResult : ChangeScene
 {
     override public void ChangeSceneTo()
     {
+        // シーン上で食べた量を、ターンをまたぐ状態へ反映する
         MonsterStatus[] monsters =
             FindObjectsByType<MonsterStatus>(
                 FindObjectsSortMode.None);
 
-        // 固定順に並べる
-        monsters = monsters
-            .OrderBy(monster => monster.monsterData.resultOrder)
-            .ToArray();
-
-        ResultData.monsterFullness.Clear();
-
         foreach (MonsterStatus monster in monsters)
         {
-            ResultData.monsterFullness[monster.monsterData] =
+            if (monster.monsterData == null)
+            {
+                continue;
+            }
+
+            GameState.GetMonsterState(monster.monsterData).eatenThisTurn =
                 monster.currentAmountEat;
         }
+
+        // 未給餌ゴミ（食糧庫の残り）の集計は Phase 3 で追加する
 
         SceneManager.LoadScene(sceneName);
     }
