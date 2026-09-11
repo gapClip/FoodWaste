@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87f9a25999e45d4db98ab4b9184dce8, type: 3}
   m_Name: TestFood05
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
-  foodName: "\u30D1\u30B5\u679C"
+  foodName: "\u3072\u304B\u3089\u3073\u305F\u5B9F"
   foodSprite: {fileID: 21300000, guid: 67b588647ae1f334d8e86369a90d3b03, type: 3}
-  amount: 4
   category: 1
   texture: 1

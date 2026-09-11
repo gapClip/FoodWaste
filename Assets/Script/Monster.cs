@@ -56,40 +56,28 @@ public class Monster : MonoBehaviour
 
     private void PlayFoodReaction(InventoryItem item)
     {
-        FoodCategory category = item.food.category;
-        FoodTexture texture = item.food.texture;
+        // 好みは MonsterData の好み表（カテゴリ × 食感）で決まる
+        FoodPreference preference =
+            monsterStatus.monsterData.GetPreference(
+                item.food.category, item.food.texture);
 
-        bool categoryFavorite =
-            category == monsterStatus.monsterData.favoriteCategory;
-
-        bool categoryDislike =
-            category == monsterStatus.monsterData.dislikeCategory;
-
-        bool textureFavorite =
-            texture == monsterStatus.monsterData.favoriteTexture;
-
-        bool textureDislike =
-            texture == monsterStatus.monsterData.dislikeTexture;
-
-
-        // 大好き：好き × 好き
-        if (categoryFavorite && textureFavorite)
+        // 大好き
+        if (preference == FoodPreference.大好き)
         {
             animator.SetTrigger("love");
             Debug.Log("大好き！");
             MonsterStatus.satisfaction += 3*item.selectedCount;
             MonsterStatus.growth += item.food.amount*item.selectedCount*1.5f;
         }
-        // 嫌い：嫌い × 嫌い
-        else if (categoryDislike && textureDislike)
+        // 大嫌い
+        else if (preference == FoodPreference.大嫌い)
         {
             animator.SetTrigger("dislike");
             Debug.Log("嫌い！");
             MonsterStatus.satisfaction -= 2*item.selectedCount;
         }
-        // 好き：好き × 普通、普通 × 好き
-        else if ((categoryFavorite && !textureDislike) ||
-                 (textureFavorite && !categoryDislike))
+        // 好き
+        else if (preference == FoodPreference.好き)
         {
             animator.SetTrigger("like");
             Debug.Log("好き！");
@@ -97,7 +85,7 @@ public class Monster : MonoBehaviour
             MonsterStatus.growth += item.food.amount*item.selectedCount;
             MonsterStatus.growth += item.food.amount*item.selectedCount*1.2f;
         }
-        // その他
+        // 普通
         else
         {
             animator.SetTrigger("normal");

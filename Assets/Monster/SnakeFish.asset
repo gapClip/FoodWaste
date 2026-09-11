@@ -15,7 +15,16 @@ MonoBehaviour:
   monsterName: SnakeFish
   amountEat: 12
   resultOrder: 3
-  favoriteCategory: 2
-  dislikeCategory: 1
-  favoriteTexture: 0
-  dislikeTexture: 2
+  preferenceTable:
+  - category: 0
+    "\u30C9\u30ED\u30C9\u30ED": 1
+    "\u30D1\u30B5\u30D1\u30B5": 1
+    "\u30B4\u30C4\u30B4\u30C4": 0
+  - category: 1
+    "\u30C9\u30ED\u30C9\u30ED": 0
+    "\u30D1\u30B5\u30D1\u30B5": 0
+    "\u30B4\u30C4\u30B4\u30C4": 3
+  - category: 2
+    "\u30C9\u30ED\u30C9\u30ED": 2
+    "\u30D1\u30B5\u30D1\u30B5": 1
+    "\u30B4\u30C4\u30B4\u30C4": 0

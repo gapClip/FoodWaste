@@ -1466,6 +1466,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe14e878ec1457a40b066d2ca215b367, type: 2}
   - {fileID: 11400000, guid: ed1bd3be7fca16e469435f8a06371bba, type: 2}
   - {fileID: 11400000, guid: 88145f2672db14248905b211b6b17c8e, type: 2}
+  - {fileID: 11400000, guid: bba461b5b8e5e1b488833691e2b82910, type: 2}
   buy: {fileID: 2112293458}
 --- !u!1 &619394800
 GameObject:
