@@ -19,7 +19,7 @@ public class Result : MonoBehaviour
 
         text += $"ターン {GameState.turn} / {GameBalance.Instance.turnCount}\n";
         text += $"今ターンのゴミ：{GameState.TurnTrash}\n";
-        text += $"累計CO₂：{GameState.totalCo2}\n\n";
+        text += $"累計CO2：{GameState.totalCo2}\n\n";
 
         foreach (MonsterState state in states)
         {
