@@ -17,71 +17,45 @@ public class Monster : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // 食べ物を与える。選んだ個数を1個ずつ計算する（SPEC 8.1）
-    public void Feed(InventoryItem item)
+    // 食べ物を1個与える（SPEC 8.1）。与えられたら true を返す
+    public bool Feed(FoodData food)
     {
-        if (item.ownedCount <= 0)
-        {
-            return;
-        }
+        int remaining = monsterStatus.maxAmountEat - monsterStatus.currentAmountEat;
 
-        // ＋−で個数を選んでいなければ1個だけ与える
-        int count = Mathf.Clamp(item.selectedCount, 1, item.ownedCount);
+        // 残り容量が0のときは与えられない（残り1でも与えられる）
+        if (remaining <= 0)
+        {
+            Debug.Log("これ以上食べられません！");
+            return false;
+        }
 
         // 好みは MonsterData の好み表（カテゴリ × 食感）で決まる
         FoodPreference preference =
-            monsterStatus.monsterData.GetPreference(
-                item.food.category, item.food.texture);
+            monsterStatus.monsterData.GetPreference(food.category, food.texture);
 
         MonsterState state = monsterStatus.State;
 
-        int fedCount = 0;
-        int trashAmount = 0;
+        FeedResult result = GameBalance.Instance.CalculateFeed(
+            preference, food.amount, remaining);
 
-        for (int i = 0; i < count; i++)
-        {
-            int remaining = monsterStatus.maxAmountEat - monsterStatus.currentAmountEat;
-
-            // 残り容量が0のときは与えられない（残り1でも与えられる）
-            if (remaining <= 0)
-            {
-                break;
-            }
-
-            FeedResult result = GameBalance.Instance.CalculateFeed(
-                preference, item.food.amount, remaining);
-
-            monsterStatus.currentAmountEat += result.eaten;
-            // 小数の誤差で閾値（例：成長40）を取りこぼさないよう、足したあとも小数第1位で丸める
-            state.satisfaction = GameBalance.RoundToTenth(state.satisfaction + result.satisfaction);
-            state.growthPoints = GameBalance.RoundToTenth(state.growthPoints + result.growth);
-            GameState.AddFeedTrash(result.trash);
-
-            trashAmount += result.trash;
-            fedCount++;
-        }
-
-        if (fedCount == 0)
-        {
-            Debug.Log("これ以上食べられません！");
-            return;
-        }
+        monsterStatus.currentAmountEat += result.eaten;
+        // 小数の誤差で閾値（例：成長40）を取りこぼさないよう、足したあとも小数第1位で丸める
+        state.satisfaction = GameBalance.RoundToTenth(state.satisfaction + result.satisfaction);
+        state.growthPoints = GameBalance.RoundToTenth(state.growthPoints + result.growth);
+        GameState.AddFeedTrash(result.trash);
 
         PlayFoodReaction(preference);
 
         // 食べ残し（大嫌いでそのまま残した分も含む）が出たらゴミ袋を出す
-        if (trashAmount > 0)
+        if (result.trash > 0)
         {
             SpawnTrash();
         }
 
-        // 与えられなかった分は食糧庫に残る
-        item.ownedCount -= fedCount;
-        item.selectedCount = 0;
-
-        Debug.Log($"{item.food.foodName} を {fedCount} 個与えた（{preference}）");
-        Debug.Log($"食べた量: {monsterStatus.currentAmountEat}/{monsterStatus.maxAmountEat}　ゴミ: {trashAmount}");
+        Debug.Log($"{food.foodName} を与えた（{preference}）　食べた量: {monsterStatus.currentAmountEat}/{monsterStatus.maxAmountEat}　ゴミ: {result.trash}");
         Debug.Log($"満足度: {state.satisfaction}　成長ポイント: {state.growthPoints}");
+
+        return true;
     }
 
     // 好みに応じた食事アニメーション

@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+// 食糧庫のスロットをドラッグして、動物にドロップすると1個与える
 [RequireComponent(typeof(CanvasGroup))]
 public class FoodDrag : MonoBehaviour,
     IBeginDragHandler,
     IDragHandler,
     IEndDragHandler
 {
-    public InventoryItem item;
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -44,17 +44,19 @@ public class FoodDrag : MonoBehaviour,
 
         Collider2D hit = Physics2D.OverlapPoint(worldPos);
 
-        if (hit != null)
+        if (hit != null && slotUI != null && slotUI.item != null)
         {
             Monster monster = hit.GetComponent<Monster>();
 
-            if (monster != null)
+            // 与えられたら（大嫌いで残された場合も含む）食糧庫から1個減らす
+            if (monster != null && monster.Feed(slotUI.item.food))
             {
-                monster.Feed(item);
-                slotUI.Refresh();
+                slotUI.inventory.RemoveItem(slotUI.item);
+                return;
             }
         }
 
+        // 与えられなかったときは元の位置に戻す
         rectTransform.anchoredPosition = startPos;
     }
 }

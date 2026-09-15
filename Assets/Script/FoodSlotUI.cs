@@ -1,51 +1,20 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 食糧庫の1スロット。食べ物のアイコンだけを表示する
 public class FoodSlotUI : MonoBehaviour
 {
     public Image icon;
-    public TMP_Text countText;
 
-    public Button plusButton;
-    public Button minusButton;
+    // このスロットの食べ物（1個）と、持ち主の食糧庫
+    [System.NonSerialized] public InventoryItem item;
+    [System.NonSerialized] public Inventory inventory;
 
-    public InventoryItem item;
-    public GameObject inventory;
-
-    public void Setup(InventoryItem inventoryItem)
+    public void Setup(InventoryItem inventoryItem, Inventory owner)
     {
         item = inventoryItem;
+        inventory = owner;
 
         icon.sprite = item.food.foodSprite;
-        GetComponent<FoodDrag>().item = item;
-
-        Refresh();
-
-        plusButton.onClick.AddListener(Add);
-        minusButton.onClick.AddListener(Remove);
-    }
-
-    void Add()
-    {
-        if (item.selectedCount < item.ownedCount)
-        {
-            item.selectedCount++;
-            Refresh();
-        }
-    }
-
-    void Remove()
-    {
-        if (item.selectedCount > 0)
-        {
-            item.selectedCount--;
-            Refresh();
-        }
-    }
-
-    public void Refresh()
-    {
-        countText.text = $"{item.selectedCount}/{item.ownedCount}";
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 食糧庫。食べ物1個につき1スロットを作る
 public class Inventory : MonoBehaviour
 {
     public Transform content;
@@ -20,36 +21,43 @@ public class Inventory : MonoBehaviour
     {
         foreach (InventoryItem item in items)
         {
-            GameObject obj = Instantiate(foodSlotPrefab, content);
-
-            obj.GetComponent<FoodSlotUI>().Setup(item);
+            if (!slotUIs.ContainsKey(item))
+            {
+                CreateSlot(item);
+            }
         }
     }
+
+    // 食べ物を1個追加する（同じ食べ物でもまとめず、1個ずつスロットを作る）
     public void AddFood(FoodData food)
     {
-        InventoryItem item = items.Find(x => x.food == food);
+        InventoryItem item = new InventoryItem();
+        item.food = food;
 
-        if (item != null)
+        items.Add(item);
+        CreateSlot(item);
+    }
+
+    // 食べ物を1個取り除く（動物に与えたとき）
+    public void RemoveItem(InventoryItem item)
+    {
+        items.Remove(item);
+
+        if (slotUIs.TryGetValue(item, out FoodSlotUI slot))
         {
-            item.ownedCount++;
-            slotUIs[item].Refresh();
+            slotUIs.Remove(item);
+            Destroy(slot.gameObject);
         }
-        else
-        {
-            item = new InventoryItem();
-            item.food = food;
-            item.ownedCount = 1;
-            item.selectedCount = 0;
+    }
 
-            items.Add(item);
+    private void CreateSlot(InventoryItem item)
+    {
+        GameObject obj = Instantiate(foodSlotPrefab, content);
 
-            GameObject obj = Instantiate(foodSlotPrefab, content);
+        FoodSlotUI slot = obj.GetComponent<FoodSlotUI>();
 
-            FoodSlotUI slot = obj.GetComponent<FoodSlotUI>();
+        slot.Setup(item, this);
 
-            slot.Setup(item);
-
-            slotUIs.Add(item, slot);
-        }
+        slotUIs.Add(item, slot);
     }
 }
