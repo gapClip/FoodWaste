@@ -12,7 +12,8 @@ public class trashCreate : MonoBehaviour
 
     void Start()
     {
-        int trashCount = Mathf.FloorToInt(ResultData.sceneLeftover / trashMeasure);
+        // 今ターンのゴミ量からゴミオブジェクトの数を決める
+        int trashCount = GameState.TurnTrash / trashMeasure;
 
         for (int i = 0; i < trashCount; i++)
         {

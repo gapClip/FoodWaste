@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a68690ab977bb4b9515e3bc8ddb037, type: 3}
+  m_Name: GameBalance
+  m_EditorClassIdentifier: Assembly-CSharp::GameBalance
+  turnCount: 10
+  fullnessBase: 4
+  meatBonus: 1
+  fruitBonus: -1
+  fishBonus: 0
+  dorodoroBonus: 0
+  pasapasaBonus: 1
+  gotsugotsuBonus: 2
+  sizeMultipliers:
+  - 1
+  - 1.25
+  - 1.5
+  - 1.75
+  - 2
+  growthThresholdMultipliers:
+  - 2.5
+  - 5.5
+  - 9
+  - 13
+  loveGrowth: 1.5
+  likeGrowth: 1.2
+  normalGrowth: 1
+  loveSatisfaction: 3
+  likeSatisfaction: 1
+  normalSatisfaction: 0
+  hateSatisfaction: -2
+  spillPenalty: -1
+  smokePenalty: -0.5
+  satisfactionTargetMultiplier: 16
+  tasteRankThresholds: 5a000000460000003200000019000000
+  shopDisplayCount: 4
+  maxBuyPerFood: 4
+  maxBuyPerTurn: 12
+  pantrySlots: 12
+  co2StageThresholds: 0a000000190000002d0000004600000064000000
+  pollutionDenominator: 100
+  stageUpBlackoutSeconds: 0.5
+  bonfireTierThresholds: 01000000050000000a00000014000000
+  bonfireDurations:
+  - 1
+  - 1.5
+  - 2
+  - 2.5
+  - 3
+  smokeParticleBase: 20
+  smokeParticlePerTrash: 6
+  smokeParticleMax: 200
+  smokeHeightBase: 0.2
+  smokeHeightPerTrash: 0.04
+  smokeHeightMin: 0.2
+  smokeHeightMax: 1

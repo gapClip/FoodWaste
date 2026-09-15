@@ -15,7 +15,16 @@ MonoBehaviour:
   monsterName: LegFly
   amountEat: 8
   resultOrder: 2
-  favoriteCategory: 1
-  dislikeCategory: 0
-  favoriteTexture: 0
-  dislikeTexture: 1
+  preferenceTable:
+  - category: 0
+    "\u30C9\u30ED\u30C9\u30ED": 0
+    "\u30D1\u30B5\u30D1\u30B5": 3
+    "\u30B4\u30C4\u30B4\u30C4": 0
+  - category: 1
+    "\u30C9\u30ED\u30C9\u30ED": 2
+    "\u30D1\u30B5\u30D1\u30B5": 0
+    "\u30B4\u30C4\u30B4\u30C4": 1
+  - category: 2
+    "\u30C9\u30ED\u30C9\u30ED": 1
+    "\u30D1\u30B5\u30D1\u30B5": 0
+    "\u30B4\u30C4\u30B4\u30C4": 1

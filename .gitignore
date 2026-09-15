@@ -111,3 +111,7 @@ InitTestScene*.unity*
 
 # VSCode
 .vscode/
+# Local docs (not shared)
+/SPEC.md
+/CLAUDE.md
+/ROADMAP.md

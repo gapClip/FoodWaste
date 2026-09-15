@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -12,51 +13,32 @@ public class Result : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(ResultData.sceneLeftover);
-        Debug.Log(ResultData.totalLeftover);
-        Debug.Log(ResultData.monsterFullness.Count);
-
-        foreach (var kvp in ResultData.monsterFullness)
-        {
-            Debug.Log($"Monster: {kvp.Key}, Fullness: {kvp.Value}");
-        }
+        List<MonsterState> states = GameState.GetMonsterStates();
 
         string text = "";
 
-        text += $"食べ残し（今回）：{ResultData.sceneLeftover}\n";
-        text += $"食べ残し（累計）：{ResultData.totalLeftover}\n\n";
+        text += $"ターン {GameState.turn} / {GameBalance.Instance.turnCount}\n";
+        text += $"今ターンのゴミ：{GameState.TurnTrash}\n";
+        text += $"累計CO₂：{GameState.totalCo2}\n\n";
 
-        text += "モンスターの満腹度\n";
-
-        foreach (var kvp in ResultData.monsterFullness)
+        foreach (MonsterState state in states)
         {
-            float fullnessPercent =
-                kvp.Value / kvp.Key.amountEat * 100f;
-
-            text += $"{kvp.Key.monsterName}：{fullnessPercent:F2}%\n";
+            text += $"{state.data.monsterName}：" +
+                    $"満腹 {state.eatenThisTurn}/{state.Capacity}　" +
+                    $"満足度 {state.SatisfactionPercent}%　" +
+                    $"Lv{state.Level}\n";
         }
 
         resultText.text = text;
 
         // 円グラフを生成
-        CreateMonsterGraphs();
+        CreateMonsterGraphs(states);
     }
 
-
-    private void CreateMonsterGraphs()
+    private void CreateMonsterGraphs(List<MonsterState> states)
     {
-        foreach (var kvp in ResultData.monsterFullness)
+        foreach (MonsterState state in states)
         {
-            MonsterData monsterData = kvp.Key;
-            float currentAmount = kvp.Value;
-
-            // 0～1の割合に変換
-            float fullnessRate =
-                currentAmount / monsterData.amountEat;
-
-            // 0～1の範囲に収める
-            fullnessRate = Mathf.Clamp01(fullnessRate);
-
             // 円グラフPrefabを生成
             GameObject graph =
                 Instantiate(monsterGraphPrefab, monsterGraphParent);
@@ -71,11 +53,11 @@ public class Result : MonoBehaviour
                 .GetComponent<TextMeshProUGUI>();
 
             // 円グラフを設定
-            circle.fillAmount = fullnessRate;
+            circle.fillAmount = state.FullnessRate;
 
             // パーセントを表示
             percentageText.text =
-                $"{fullnessRate * 100f:F1}%";
+                $"{state.FullnessRate * 100f:F1}%";
         }
     }
 }

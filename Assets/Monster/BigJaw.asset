@@ -15,7 +15,16 @@ MonoBehaviour:
   monsterName: BigJaw
   amountEat: 16
   resultOrder: 1
-  favoriteCategory: 0
-  dislikeCategory: 1
-  favoriteTexture: 2
-  dislikeTexture: 0
+  preferenceTable:
+  - category: 0
+    "\u30C9\u30ED\u30C9\u30ED": 0
+    "\u30D1\u30B5\u30D1\u30B5": 1
+    "\u30B4\u30C4\u30B4\u30C4": 2
+  - category: 1
+    "\u30C9\u30ED\u30C9\u30ED": 3
+    "\u30D1\u30B5\u30D1\u30B5": 0
+    "\u30B4\u30C4\u30B4\u30C4": 0
+  - category: 2
+    "\u30C9\u30ED\u30C9\u30ED": 0
+    "\u30D1\u30B5\u30D1\u30B5": 1
+    "\u30B4\u30C4\u30B4\u30C4": 1

@@ -3,7 +3,6 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     private MonsterStatus monsterStatus;
-    private float overflow = 0;
     private Animator animator;
     [SerializeField] private GameObject trash;
 
@@ -32,6 +31,8 @@ public class Monster : MonoBehaviour
             PlayFoodReaction(item);
             monsterStatus.currentAmountEat += item.food.amount * item.selectedCount;
 
+            int overflow = 0;
+
             if (monsterStatus.currentAmountEat > monsterStatus.maxAmountEat)
             {
                 overflow = monsterStatus.currentAmountEat - monsterStatus.maxAmountEat;
@@ -41,13 +42,12 @@ public class Monster : MonoBehaviour
                 SpawnTrash();
             }
 
+            GameState.AddFeedTrash(overflow);
+
             Debug.Log("現在の食べた量: " + monsterStatus.currentAmountEat);
             Debug.Log("残した量: " + overflow);
-            Debug.Log("満足度: " + MonsterStatus.satisfaction);
-            Debug.Log("成長度: " + MonsterStatus.growth);
-
-            ResultData.sceneLeftover += overflow;
-            ResultData.totalLeftover += overflow;
+            Debug.Log("満足度: " + monsterStatus.State.satisfaction);
+            Debug.Log("成長度: " + monsterStatus.State.growthPoints);
 
             item.ownedCount -= item.selectedCount;
             item.selectedCount = 0;
@@ -56,54 +56,44 @@ public class Monster : MonoBehaviour
 
     private void PlayFoodReaction(InventoryItem item)
     {
-        FoodCategory category = item.food.category;
-        FoodTexture texture = item.food.texture;
+        // 好みは MonsterData の好み表（カテゴリ × 食感）で決まる
+        FoodPreference preference =
+            monsterStatus.monsterData.GetPreference(
+                item.food.category, item.food.texture);
 
-        bool categoryFavorite =
-            category == monsterStatus.monsterData.favoriteCategory;
+        MonsterState state = monsterStatus.State;
 
-        bool categoryDislike =
-            category == monsterStatus.monsterData.dislikeCategory;
-
-        bool textureFavorite =
-            texture == monsterStatus.monsterData.favoriteTexture;
-
-        bool textureDislike =
-            texture == monsterStatus.monsterData.dislikeTexture;
-
-
-        // 大好き：好き × 好き
-        if (categoryFavorite && textureFavorite)
+        // 大好き
+        if (preference == FoodPreference.大好き)
         {
             animator.SetTrigger("love");
             Debug.Log("大好き！");
-            MonsterStatus.satisfaction += 3*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount*1.5f;
+            state.satisfaction += 3*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount*1.5f;
         }
-        // 嫌い：嫌い × 嫌い
-        else if (categoryDislike && textureDislike)
+        // 大嫌い
+        else if (preference == FoodPreference.大嫌い)
         {
             animator.SetTrigger("dislike");
             Debug.Log("嫌い！");
-            MonsterStatus.satisfaction -= 2*item.selectedCount;
+            state.satisfaction -= 2*item.selectedCount;
         }
-        // 好き：好き × 普通、普通 × 好き
-        else if ((categoryFavorite && !textureDislike) ||
-                 (textureFavorite && !categoryDislike))
+        // 好き
+        else if (preference == FoodPreference.好き)
         {
             animator.SetTrigger("like");
             Debug.Log("好き！");
-            MonsterStatus.satisfaction += 1*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount*1.2f;
+            state.satisfaction += 1*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount*1.2f;
         }
-        // その他
+        // 普通
         else
         {
             animator.SetTrigger("normal");
             Debug.Log("普通！");
-            MonsterStatus.satisfaction += 0*item.selectedCount;
-            MonsterStatus.growth += item.food.amount*item.selectedCount;
+            state.satisfaction += 0*item.selectedCount;
+            state.growthPoints += item.food.amount*item.selectedCount;
         }
     }
 
