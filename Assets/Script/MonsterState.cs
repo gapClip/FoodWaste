@@ -14,20 +14,28 @@ public class MonsterState
     // 今ターンに食べた量
     public int eatenThisTurn;
 
+    // このターンが始まったときの成長段階（GameState.AdvanceTurn で更新する）
+    public int levelAtTurnStart = 1;
+
     public MonsterState(MonsterData data)
     {
         this.data = data;
     }
 
-    // 累計成長ポイントから決まる成長段階
-    // ターン中の容量は MonsterStatus がターン開始時にコピーして固定する
+    // 累計成長ポイントから決まる、いまの成長段階
     public int Level => GameBalance.Instance.GetLevel(data.amountEat, growthPoints);
 
-    // 今の成長段階での容量
+    // いまの成長段階での容量（次のターンの容量）
     public int Capacity => GameBalance.Instance.GetCapacity(data.amountEat, Level);
 
-    // 見た目のサイズ倍率
-    public float SizeMultiplier => GameBalance.Instance.GetSizeMultiplier(Level);
+    // このターンの容量。ターン中に成長しても変わらない（SPEC 4.1）
+    public int CapacityAtTurnStart => GameBalance.Instance.GetCapacity(data.amountEat, levelAtTurnStart);
+
+    // このターンの見た目の大きさ。シーンに置いた大きさ（Lv5）を 1 とした縦・横の倍率
+    public float PlacedScaleAtTurnStart => GameBalance.Instance.GetPlacedScale(levelAtTurnStart);
+
+    // このターンに成長段階が上がったか（リザルトの「おおきくなった！」用）
+    public bool LeveledUp => Level > levelAtTurnStart;
 
     // 満足度%（0〜100、切り捨て）
     public int SatisfactionPercent
@@ -48,7 +56,7 @@ public class MonsterState
     {
         get
         {
-            int capacity = Capacity;
+            int capacity = CapacityAtTurnStart;
 
             return capacity > 0 ? Mathf.Clamp01((float)eatenThisTurn / capacity) : 0f;
         }

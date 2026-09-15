@@ -22,6 +22,9 @@ public class trashCheck : MonoBehaviour
     }
     void ButtonActive()
     {
+        // ゴミを燃やし終えたら、ターンのゴミを累計CO₂と満足度に反映する（1ターンに1回だけ）
+        GameState.Incinerate();
+
         clearButton.SetActive(true);
     }
 }

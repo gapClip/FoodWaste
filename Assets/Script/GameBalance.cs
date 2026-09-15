@@ -39,8 +39,10 @@ public class GameBalance : ScriptableObject
     public int gotsugotsuBonus = 2;
 
     [Header("成長（Lv1〜Lv5）")]
-    [Tooltip("容量・見た目のサイズ倍率。要素0がLv1")]
+    [Tooltip("容量のサイズ倍率（お肉の量にも使う）。要素0がLv1")]
     public float[] sizeMultipliers = { 1.00f, 1.25f, 1.50f, 1.75f, 2.00f };
+    [Tooltip("見た目の縦・横それぞれの倍率。面積がサイズ倍率とほぼ同じになるよう √サイズ倍率 を小数第1位に丸めた値。要素0がLv1")]
+    public float[] visualScaleMultipliers = { 1.0f, 1.1f, 1.2f, 1.3f, 1.4f };
     [Tooltip("そのLvに上がる累計成長ポイント（× 基礎容量）。要素0がLv2")]
     public float[] growthThresholdMultipliers = { 2.5f, 5.5f, 9.0f, 13.0f };
 
@@ -118,6 +120,18 @@ public class GameBalance : ScriptableObject
     public float GetSizeMultiplier(int level)
     {
         return sizeMultipliers[Mathf.Clamp(level, 1, MaxLevel) - 1];
+    }
+
+    // 見た目の縦・横の倍率（Lv1 を 1 とする）
+    public float GetVisualScale(int level)
+    {
+        return visualScaleMultipliers[Mathf.Clamp(level, 1, visualScaleMultipliers.Length) - 1];
+    }
+
+    // シーンに置いた大きさ（最大の Lv）を 1 としたときの、見た目の縦・横の倍率
+    public float GetPlacedScale(int level)
+    {
+        return GetVisualScale(level) / visualScaleMultipliers[visualScaleMultipliers.Length - 1];
     }
 
     // 容量 = 基礎容量 × サイズ倍率
