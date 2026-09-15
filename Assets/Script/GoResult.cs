@@ -21,7 +21,9 @@ public class GoResult : ChangeScene
                 monster.currentAmountEat;
         }
 
-        // 未給餌ゴミ（食糧庫の残り）の集計は Phase 3 で追加する
+        // 食糧庫に残った食べ物は、使わなかった餌としてゴミになる（SPEC 8.2）
+        Inventory inventory = FindFirstObjectByType<Inventory>();
+        GameState.turnUnusedTrash = inventory != null ? inventory.RemainingFullness() : 0;
 
         SceneManager.LoadScene(sceneName);
     }

@@ -14,8 +14,14 @@ public static class GameState
     // 今ターンの給餌で出たゴミ
     public static int turnFeedTrash;
 
-    // 今ターンに使い切らなかった食糧庫のゴミ（Phase 3 で設定する）
+    // 今ターンに使い切らなかった食糧庫のゴミ（餌やり終了時に GoResult が設定する）
     public static int turnUnusedTrash;
+
+    // 今ターンのゴミをもう燃やしたか（焼却の処理を1ターンに1回だけにする）
+    public static bool incineratedThisTurn;
+
+    // 焼却する前のCO₂段階（段階が上がったかの判定に使う）
+    public static int co2StageBeforeIncineration;
 
     private static readonly Dictionary<MonsterData, MonsterState> monsterStates =
         new Dictionary<MonsterData, MonsterState>();
@@ -26,6 +32,9 @@ public static class GameState
     public static int Co2Stage => GameBalance.Instance.GetCo2Stage(totalCo2);
 
     public static float Pollution => GameBalance.Instance.GetPollution(totalCo2);
+
+    // 今ターンの焼却でCO₂段階が上がったか（ゴミ処理画面の暗転＋テロップ用）
+    public static bool Co2StageRaised => incineratedThisTurn && Co2Stage > co2StageBeforeIncineration;
 
     public static bool IsLastTurn => turn >= GameBalance.Instance.turnCount;
 
@@ -38,6 +47,8 @@ public static class GameState
         totalCo2 = 0;
         turnFeedTrash = 0;
         turnUnusedTrash = 0;
+        incineratedThisTurn = false;
+        co2StageBeforeIncineration = 0;
         monsterStates.Clear();
     }
 
@@ -77,19 +88,47 @@ public static class GameState
         turnFeedTrash += amount;
     }
 
+    // 今ターンのゴミを燃やす（SPEC 8.2）。ゴミを燃やし終えたときに呼ぶ。2回目以降は何もしない
+    public static void Incinerate()
+    {
+        if (incineratedThisTurn)
+        {
+            return;
+        }
+
+        incineratedThisTurn = true;
+        co2StageBeforeIncineration = Co2Stage;
+
+        int trash = TurnTrash;
+
+        // ごみの量 ＝ 二酸化炭素の量
+        totalCo2 += trash;
+
+        // 焚き火の煙で全動物の満足度が下がる。満足度は0未満にしない
+        float penalty = GameBalance.Instance.smokePenalty * trash;
+
+        foreach (MonsterState state in monsterStates.Values)
+        {
+            state.satisfaction = GameBalance.RoundToTenth(Mathf.Max(state.satisfaction + penalty, 0f));
+        }
+    }
+
     // ゴミ処理が終わって次のターンへ進む
-    // （満足度への煙のペナルティと成長判定は Phase 3 でここに追加する）
     public static void AdvanceTurn()
     {
-        // ごみの量 ＝ 二酸化炭素の量
-        totalCo2 += TurnTrash;
+        // 燃やす処理を通らずに進んだ場合も、ここで必ず行う
+        Incinerate();
 
         turnFeedTrash = 0;
         turnUnusedTrash = 0;
+        incineratedThisTurn = false;
 
         foreach (MonsterState state in monsterStates.Values)
         {
             state.eatenThisTurn = 0;
+
+            // 成長段階はリザルトの時点で決まり、次のターンの容量・見た目に反映する
+            state.levelAtTurnStart = state.Level;
         }
 
         turn++;

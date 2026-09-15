@@ -18,15 +18,23 @@ public class Result : MonoBehaviour
         string text = "";
 
         text += $"ターン {GameState.turn} / {GameBalance.Instance.turnCount}\n";
-        text += $"今ターンのゴミ：{GameState.TurnTrash}\n";
+        text += $"今ターンのゴミ：{GameState.TurnTrash}（食べ残し {GameState.turnFeedTrash} + 使わなかった餌 {GameState.turnUnusedTrash}）\n";
         text += $"累計CO2：{GameState.totalCo2}\n\n";
 
         foreach (MonsterState state in states)
         {
             text += $"{state.data.monsterName}：" +
-                    $"満腹 {state.eatenThisTurn}/{state.Capacity}　" +
+                    $"満腹 {state.eatenThisTurn}/{state.CapacityAtTurnStart}　" +
                     $"満足度 {state.SatisfactionPercent}%　" +
-                    $"Lv{state.Level}\n";
+                    $"Lv{state.Level}";
+
+            // 成長段階が上がったとき（演出は UI 担当と相談）
+            if (state.LeveledUp)
+            {
+                text += "　おおきくなった！";
+            }
+
+            text += "\n";
         }
 
         resultText.text = text;

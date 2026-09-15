@@ -60,6 +60,19 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    // 食糧庫に残っている食べ物の満腹度の合計（使わなかった餌＝未給餌ゴミ、SPEC 8.2）
+    public int RemainingFullness()
+    {
+        int total = 0;
+
+        foreach (InventoryItem item in items)
+        {
+            total += item.food.amount * item.count;
+        }
+
+        return total;
+    }
+
     private void CreateSlot(InventoryItem item)
     {
         GameObject obj = Instantiate(foodSlotPrefab, content);
