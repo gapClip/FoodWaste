@@ -31,8 +31,8 @@ public class MonsterState
     // このターンの容量。ターン中に成長しても変わらない（SPEC 4.1）
     public int CapacityAtTurnStart => GameBalance.Instance.GetCapacity(data.amountEat, levelAtTurnStart);
 
-    // このターンの見た目のサイズ倍率
-    public float SizeMultiplierAtTurnStart => GameBalance.Instance.GetSizeMultiplier(levelAtTurnStart);
+    // このターンの見た目の大きさ。シーンに置いた大きさ（Lv5）を 1 とした縦・横の倍率
+    public float PlacedScaleAtTurnStart => GameBalance.Instance.GetPlacedScale(levelAtTurnStart);
 
     // このターンに成長段階が上がったか（リザルトの「おおきくなった！」用）
     public bool LeveledUp => Level > levelAtTurnStart;
