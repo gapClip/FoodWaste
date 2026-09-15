@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 食糧庫。食べ物1個につき1スロットを作る
+// 食糧庫。食べ物1種類につき1スロットを作り、個数をまとめて持つ
 public class Inventory : MonoBehaviour
 {
     public Transform content;
@@ -28,17 +28,27 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // 食べ物を1個追加する（同じ食べ物でもまとめず、1個ずつスロットを作る）
+    // 食べ物を1個追加する。同じ食べ物のスロットがあれば個数を増やす
     public void AddFood(FoodData food)
     {
-        InventoryItem item = new InventoryItem();
+        InventoryItem item = items.Find(x => x.food == food);
+
+        if (item != null)
+        {
+            item.count++;
+            slotUIs[item].Refresh();
+            return;
+        }
+
+        item = new InventoryItem();
         item.food = food;
+        item.count = 1;
 
         items.Add(item);
         CreateSlot(item);
     }
 
-    // 食べ物を1個取り除く（動物に与えたとき）
+    // スロットを取り除く（個数が0になったとき）
     public void RemoveItem(InventoryItem item)
     {
         items.Remove(item);
