@@ -17,45 +17,17 @@ public class Monster : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    // 食べ物を与える。選んだ個数を1個ずつ計算する（SPEC 8.1）
     public void Feed(InventoryItem item)
     {
-        if (item.selectedCount > 0)
+        if (item.ownedCount <= 0)
         {
-            if (monsterStatus.currentAmountEat >= monsterStatus.maxAmountEat)
-            {
-                Debug.Log("これ以上食べられません！");
-                return;
-            }
-
-            Debug.Log(item.food.foodName + " を食べた！");
-            PlayFoodReaction(item);
-            monsterStatus.currentAmountEat += item.food.amount * item.selectedCount;
-
-            int overflow = 0;
-
-            if (monsterStatus.currentAmountEat > monsterStatus.maxAmountEat)
-            {
-                overflow = monsterStatus.currentAmountEat - monsterStatus.maxAmountEat;
-                monsterStatus.currentAmountEat = monsterStatus.maxAmountEat;
-
-                // 食べ残しが発生したらゴミを生成
-                SpawnTrash();
-            }
-
-            GameState.AddFeedTrash(overflow);
-
-            Debug.Log("現在の食べた量: " + monsterStatus.currentAmountEat);
-            Debug.Log("残した量: " + overflow);
-            Debug.Log("満足度: " + monsterStatus.State.satisfaction);
-            Debug.Log("成長度: " + monsterStatus.State.growthPoints);
-
-            item.ownedCount -= item.selectedCount;
-            item.selectedCount = 0;
+            return;
         }
-    }
 
-    private void PlayFoodReaction(InventoryItem item)
-    {
+        // ＋−で個数を選んでいなければ1個だけ与える
+        int count = Mathf.Clamp(item.selectedCount, 1, item.ownedCount);
+
         // 好みは MonsterData の好み表（カテゴリ × 食感）で決まる
         FoodPreference preference =
             monsterStatus.monsterData.GetPreference(
@@ -63,37 +35,72 @@ public class Monster : MonoBehaviour
 
         MonsterState state = monsterStatus.State;
 
-        // 大好き
-        if (preference == FoodPreference.大好き)
+        int fedCount = 0;
+        int trashAmount = 0;
+
+        for (int i = 0; i < count; i++)
         {
-            animator.SetTrigger("love");
-            Debug.Log("大好き！");
-            state.satisfaction += 3*item.selectedCount;
-            state.growthPoints += item.food.amount*item.selectedCount*1.5f;
+            int remaining = monsterStatus.maxAmountEat - monsterStatus.currentAmountEat;
+
+            // 残り容量が0のときは与えられない（残り1でも与えられる）
+            if (remaining <= 0)
+            {
+                break;
+            }
+
+            FeedResult result = GameBalance.Instance.CalculateFeed(
+                preference, item.food.amount, remaining);
+
+            monsterStatus.currentAmountEat += result.eaten;
+            // 小数の誤差で閾値（例：成長40）を取りこぼさないよう、足したあとも小数第1位で丸める
+            state.satisfaction = GameBalance.RoundToTenth(state.satisfaction + result.satisfaction);
+            state.growthPoints = GameBalance.RoundToTenth(state.growthPoints + result.growth);
+            GameState.AddFeedTrash(result.trash);
+
+            trashAmount += result.trash;
+            fedCount++;
         }
-        // 大嫌い
-        else if (preference == FoodPreference.大嫌い)
+
+        if (fedCount == 0)
         {
-            animator.SetTrigger("dislike");
-            Debug.Log("嫌い！");
-            state.satisfaction -= 2*item.selectedCount;
+            Debug.Log("これ以上食べられません！");
+            return;
         }
-        // 好き
-        else if (preference == FoodPreference.好き)
+
+        PlayFoodReaction(preference);
+
+        // 食べ残し（大嫌いでそのまま残した分も含む）が出たらゴミ袋を出す
+        if (trashAmount > 0)
         {
-            animator.SetTrigger("like");
-            Debug.Log("好き！");
-            state.satisfaction += 1*item.selectedCount;
-            state.growthPoints += item.food.amount*item.selectedCount;
-            state.growthPoints += item.food.amount*item.selectedCount*1.2f;
+            SpawnTrash();
         }
-        // 普通
-        else
+
+        // 与えられなかった分は食糧庫に残る
+        item.ownedCount -= fedCount;
+        item.selectedCount = 0;
+
+        Debug.Log($"{item.food.foodName} を {fedCount} 個与えた（{preference}）");
+        Debug.Log($"食べた量: {monsterStatus.currentAmountEat}/{monsterStatus.maxAmountEat}　ゴミ: {trashAmount}");
+        Debug.Log($"満足度: {state.satisfaction}　成長ポイント: {state.growthPoints}");
+    }
+
+    // 好みに応じた食事アニメーション
+    private void PlayFoodReaction(FoodPreference preference)
+    {
+        switch (preference)
         {
-            animator.SetTrigger("normal");
-            Debug.Log("普通！");
-            state.satisfaction += 0*item.selectedCount;
-            state.growthPoints += item.food.amount*item.selectedCount;
+            case FoodPreference.大好き:
+                animator.SetTrigger("love");
+                break;
+            case FoodPreference.好き:
+                animator.SetTrigger("like");
+                break;
+            case FoodPreference.大嫌い:
+                animator.SetTrigger("dislike");
+                break;
+            default:
+                animator.SetTrigger("normal");
+                break;
         }
     }
 

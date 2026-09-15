@@ -173,6 +173,39 @@ public class GameBalance : ScriptableObject
         };
     }
 
+    // 1個与えたときの結果（SPEC 8.1）
+    // remainingCapacity：その動物の残り容量（0 のときは与えられないので呼ばない）
+    public FeedResult CalculateFeed(FoodPreference preference, int fullness, int remainingCapacity)
+    {
+        FeedResult result = new FeedResult();
+        result.preference = preference;
+
+        // 大嫌い：食べずにそのまま残す（満腹度がまるごとゴミ）
+        if (preference == FoodPreference.大嫌い)
+        {
+            result.eaten = 0;
+            result.trash = fullness;
+            result.satisfaction = RoundToTenth(hateSatisfaction * fullness);
+            result.growth = 0f;
+            return result;
+        }
+
+        // 食べている途中で満腹になった分はゴミになる
+        result.eaten = Mathf.Min(fullness, Mathf.Max(remainingCapacity, 0));
+        result.trash = fullness - result.eaten;
+        result.satisfaction = RoundToTenth(
+            GetSatisfactionCoefficient(preference) * result.eaten + spillPenalty * result.trash);
+        result.growth = RoundToTenth(GetGrowthCoefficient(preference) * result.eaten);
+
+        return result;
+    }
+
+    // 満足度・成長ポイントは小数第1位まで保持する（SPEC 8.4）
+    public static float RoundToTenth(float value)
+    {
+        return Mathf.Round(value * 10f) / 10f;
+    }
+
     // 味ランク（★の数 1〜5）
     public int GetTasteRank(int satisfactionPercent)
     {
@@ -231,4 +264,22 @@ public class GameBalance : ScriptableObject
 
         return count;
     }
+}
+
+// 食べ物を1個与えたときの計算結果
+public struct FeedResult
+{
+    public FoodPreference preference;
+
+    // 実際に食べた量
+    public int eaten;
+
+    // ゴミになった量
+    public int trash;
+
+    // 満足度の増減
+    public float satisfaction;
+
+    // 成長ポイントの増加
+    public float growth;
 }
