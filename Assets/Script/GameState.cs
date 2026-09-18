@@ -126,13 +126,39 @@ public static class GameState
     }
 
     // 表示用。MonsterData.resultOrder の順に並べて返す
+    // 結果画面・エンディングは動物全員の分を出す（SPEC 3.6.1）ので、シーンからまだ登録されていない動物も初期状態で含める
     public static List<MonsterState> GetMonsterStates()
     {
+        RegisterAllMonsters();
+
         List<MonsterState> states = new List<MonsterState>(monsterStates.Values);
 
         states.Sort((a, b) => a.data.resultOrder.CompareTo(b.data.resultOrder));
 
         return states;
+    }
+
+    // GameBalance.monsters（ゲームに登場する動物の全員）のうち、まだ登録されていない動物を初期状態で登録する
+    // 登録済みの動物の状態は作り直さない。一覧が空（アセットに未設定）なら何もしない
+    // NewGame() からは呼ばない（SubsystemRegistration の時点で Resources.Load をしないため）
+    private static void RegisterAllMonsters()
+    {
+        GameBalance balance = GameBalance.Instance;
+
+        if (balance == null || balance.monsters == null)
+        {
+            return;
+        }
+
+        foreach (MonsterData data in balance.monsters)
+        {
+            // 一覧の空欄は黙って飛ばす（GetMonsterState(null) の警告を、呼ぶたびに出さない）
+            // 同じ動物が2回入っていても、GetMonsterState は登録済みのものを返すだけなので増えない
+            if (data != null)
+            {
+                GetMonsterState(data);
+            }
+        }
     }
 
     // 給餌でこぼれたゴミを加算する
