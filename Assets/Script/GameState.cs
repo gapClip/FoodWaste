@@ -45,6 +45,25 @@ public static class GameState
     // 今ターンの焼却でCO₂段階が上がったか（ゴミ処理画面の暗転＋テロップ用）
     public static bool Co2StageRaised => incineratedThisTurn && Co2Stage > co2StageBeforeIncineration;
 
+    // ここから5つは、ゴミ処理画面の焚き火の演出に渡す値（SPEC 9.3）
+    // どれも今ターンの総ゴミ TurnTrash から毎回求める（保存しない）
+    // TurnTrash は AdvanceTurn() まで変わらないので、燃やす前も燃やし終えたあとも同じ値を返す
+
+    // 焚き火ティア（0〜4）
+    public static int BonfireTier => GameBalance.Instance.GetBonfireTier(TurnTrash);
+
+    // 燃える演出の継続時間（秒）
+    public static float BonfireDuration => GameBalance.Instance.GetBonfireDuration(TurnTrash);
+
+    // 煙のパーティクルの数。ゴミ0でも式どおり基本の数を返すので、ゴミ0のときは NothingToBurn を見て演出を省ける
+    public static int SmokeParticleCount => GameBalance.Instance.GetSmokeParticleCount(TurnTrash);
+
+    // 煙の高さ（画面の高さに対する割合）
+    public static float SmokeHeightRate => GameBalance.Instance.GetSmokeHeightRate(TurnTrash);
+
+    // 今ターンは燃やすものが無い（ゴミ0。「今日は燃やすものがありません」の表示用）
+    public static bool NothingToBurn => TurnTrash <= 0;
+
     public static bool IsLastTurn => turn >= GameBalance.Instance.turnCount;
 
     // 最後に抽選したショップの陳列
