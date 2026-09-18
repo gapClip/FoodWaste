@@ -256,6 +256,21 @@ public class GameBalance : ScriptableObject
         return CountReached(bonfireTierThresholds, turnTrash);
     }
 
+    // 焚き火の継続時間（秒）。SPEC 9.3
+    // Inspector で配列の長さを変えられても例外にしない（足りないティアは最後の値を使う）
+    // 配列が空なら 0 を返す。呼ぶ側は割り算に使う前に 0 かどうかを確かめること
+    public float GetBonfireDuration(int turnTrash)
+    {
+        if (bonfireDurations == null || bonfireDurations.Length == 0)
+        {
+            return 0f;
+        }
+
+        int tier = GetBonfireTier(turnTrash);
+
+        return bonfireDurations[Mathf.Clamp(tier, 0, bonfireDurations.Length - 1)];
+    }
+
     public int GetSmokeParticleCount(int turnTrash)
     {
         return Mathf.Min(smokeParticleBase + turnTrash * smokeParticlePerTrash, smokeParticleMax);
