@@ -9,6 +9,12 @@ public class CountBuy : MonoBehaviour
     // ＋ボタン
     public void AddCount()
     {
+        // 購入上限（SPEC 6.1）に達していたら増やさない（ルールは ShopRules）
+        if (!ShopRules.CanAddOne(this))
+        {
+            return;
+        }
+
         buyCount++;
         countText.text = buyCount.ToString();
     }
