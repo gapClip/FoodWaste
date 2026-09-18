@@ -69,3 +69,4 @@ MonoBehaviour:
   smokeHeightPerTrash: 0.04
   smokeHeightMin: 0.2
   smokeHeightMax: 1
+  trashPerBag: 5

@@ -95,6 +95,10 @@ public class GameBalance : ScriptableObject
     public float smokeHeightMin = 0.2f;
     public float smokeHeightMax = 1.0f;
 
+    [Header("ゴミ処理画面のゴミ袋")]
+    [Tooltip("ゴミ袋1個あたりのゴミ量。袋の数 = そのターンのゴミ ÷ この値 の切り上げ（ゴミ0なら0個）")]
+    public int trashPerBag = 5;
+
     public int MaxLevel => sizeMultipliers.Length;
 
     // 満腹度（SPEC 5.1）
@@ -261,6 +265,19 @@ public class GameBalance : ScriptableObject
     public float GetSmokeHeightRate(int turnTrash)
     {
         return Mathf.Clamp(smokeHeightBase + turnTrash * smokeHeightPerTrash, smokeHeightMin, smokeHeightMax);
+    }
+
+    // ゴミ処理画面に出すゴミ袋の数。切り上げなので、ゴミが1でもあれば1個出る（ゴミ0なら0個）
+    public int GetTrashBagCount(int turnTrash)
+    {
+        if (turnTrash <= 0)
+        {
+            return 0;
+        }
+
+        int perBag = Mathf.Max(trashPerBag, 1);
+
+        return (turnTrash + perBag - 1) / perBag;
     }
 
     // 昇順の閾値のうち、value が到達している個数
