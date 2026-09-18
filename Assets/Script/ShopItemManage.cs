@@ -35,18 +35,8 @@ public class PrefabGridSpawner : MonoBehaviour
 
         foodObjects = new GameObject[spawnCount];
 
-        // FoodDataをコピー
-        List<FoodData> randomFoods = new List<FoodData>(foodData);
-
-        // 配列をシャッフル
-        for (int i = 0; i < randomFoods.Count; i++)
-        {
-            int randomIndex = Random.Range(i, randomFoods.Count);
-
-            FoodData temp = randomFoods[i];
-            randomFoods[i] = randomFoods[randomIndex];
-            randomFoods[randomIndex] = temp;
-        }
+        // 並べるFoodDataを抽選する（SPEC 6.2。ルールは ShopLottery）
+        List<FoodData> randomFoods = ShopLottery.Draw(foodData, spawnCount);
 
         int index = 0;
 
