@@ -20,6 +20,8 @@ public class FinalIncineration : MonoBehaviour
     [Header("カメラ上昇速度")]
     [SerializeField] private float cameraMoveSpeed = 2f;
 
+    [SerializeField] private GameObject button;
+
 
     private int spawnedCount = 0;
     private bool isSpawning = false;
@@ -29,6 +31,7 @@ public class FinalIncineration : MonoBehaviour
     private void Start()
     {
         StartIncineration();
+        button.SetActive(false);
     }
 
 
@@ -160,6 +163,7 @@ public class FinalIncineration : MonoBehaviour
             Debug.Log(
                 "カメラが指定位置まで到達しました。"
             );
+            button.SetActive(true);
         }
     }
 }

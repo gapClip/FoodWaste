@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9edc86a749d2d147a47425a8cd16c16, type: 3}
+  m_Name: LF_C4
+  m_EditorClassIdentifier: Assembly-CSharp::SNSPostData
+  threshold: 0
+  image: {fileID: 0}
+  text: "\u3042\u305D\u3053\u306E\u98FC\u80B2\u65BD\u8A2D\u306F\u3001\u74B0\u5883\u3078\u306E\u914D\u616E\u304C\u884C\u304D\u5C4A\u3044\u3066\u3044\u308B\u3068\u3044\u3044\u8A55\u5224\u304C\u805E\u3053\u3048\u308B\u306D\u3002"

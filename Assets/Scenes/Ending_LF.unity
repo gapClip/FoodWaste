@@ -1551,7 +1551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1774265655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RFETest
   targetMonster: {fileID: 11400000, guid: 832f2da29398a484aa011362e2ceea22, type: 2}
   testLevel: 5
-  testTasteRank: 3
+  testTasteRank: 5
   co2: 0
 --- !u!4 &1774265656
 Transform:
@@ -1666,11 +1666,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1fa695ab4db2fe04aa23a8fa847742e4, type: 2}
   - {fileID: 11400000, guid: ea206ac544af43545bc7acea31e39da5, type: 2}
   co2Posts:
-  - {fileID: 11400000, guid: 5a4e965d58f6a524ab7f7e8fe0a7d028, type: 2}
-  - {fileID: 11400000, guid: 7067f62ddc9bc5c47a0bed85502cc891, type: 2}
-  - {fileID: 11400000, guid: 2a514fccda30e71458f19a0cee6a6c18, type: 2}
-  - {fileID: 11400000, guid: c32fff1b54fe381418dc1371f88f33cf, type: 2}
-  - {fileID: 11400000, guid: 39fe66267b742924ebf71826bb6ab23d, type: 2}
+  - {fileID: 11400000, guid: 58fc35d55af47c640aecadad534ff486, type: 2}
+  - {fileID: 11400000, guid: 2eb77024b97859242bf7645d5cf8e68d, type: 2}
+  - {fileID: 11400000, guid: a8fe0f9cfbc310846a941477cd12ba13, type: 2}
+  - {fileID: 11400000, guid: b074a91dd6bb91643b3f415fb1817128, type: 2}
+  - {fileID: 11400000, guid: 8e9c6ad6fb9130144a2793e7de10ff3a, type: 2}
 --- !u!1 &1918438071
 GameObject:
   m_ObjectHideFlags: 0
