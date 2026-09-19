@@ -29,6 +29,10 @@ public class GameBalance : ScriptableObject
     [Header("ターン")]
     public int turnCount = 10;
 
+    [Header("動物（SPEC 4章）")]
+    [Tooltip("ゲームに登場する動物の全員。結果画面・エンディングで、まだシーンから登録されていない動物も含めて必ず全員を返すために使う（GameState.GetMonsterStates）。並び順は問わない（MonsterData.resultOrder の順に並べ直す）")]
+    public MonsterData[] monsters = new MonsterData[0];
+
     [Header("満腹度 = ベース + カテゴリ補正 + 食感補正")]
     public int fullnessBase = 4;
     public int meatBonus = 1;
