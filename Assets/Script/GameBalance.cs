@@ -29,6 +29,10 @@ public class GameBalance : ScriptableObject
     [Header("ターン")]
     public int turnCount = 10;
 
+    [Header("動物（SPEC 4章）")]
+    [Tooltip("ゲームに登場する動物の全員。結果画面・エンディングで、まだシーンから登録されていない動物も含めて必ず全員を返すために使う（GameState.GetMonsterStates）。並び順は問わない（MonsterData.resultOrder の順に並べ直す）")]
+    public MonsterData[] monsters = new MonsterData[0];
+
     [Header("満腹度 = ベース + カテゴリ補正 + 食感補正")]
     public int fullnessBase = 4;
     public int meatBonus = 1;
@@ -94,6 +98,10 @@ public class GameBalance : ScriptableObject
     public float smokeHeightPerTrash = 0.04f;
     public float smokeHeightMin = 0.2f;
     public float smokeHeightMax = 1.0f;
+
+    [Header("ゴミ処理画面のゴミ袋")]
+    [Tooltip("ゴミ袋1個あたりのゴミ量。袋の数 = そのターンのゴミ ÷ この値 の切り上げ（ゴミ0なら0個）")]
+    public int trashPerBag = 5;
 
     public int MaxLevel => sizeMultipliers.Length;
 
@@ -252,6 +260,21 @@ public class GameBalance : ScriptableObject
         return CountReached(bonfireTierThresholds, turnTrash);
     }
 
+    // 焚き火の継続時間（秒）。SPEC 9.3
+    // Inspector で配列の長さを変えられても例外にしない（足りないティアは最後の値を使う）
+    // 配列が空なら 0 を返す。呼ぶ側は割り算に使う前に 0 かどうかを確かめること
+    public float GetBonfireDuration(int turnTrash)
+    {
+        if (bonfireDurations == null || bonfireDurations.Length == 0)
+        {
+            return 0f;
+        }
+
+        int tier = GetBonfireTier(turnTrash);
+
+        return bonfireDurations[Mathf.Clamp(tier, 0, bonfireDurations.Length - 1)];
+    }
+
     public int GetSmokeParticleCount(int turnTrash)
     {
         return Mathf.Min(smokeParticleBase + turnTrash * smokeParticlePerTrash, smokeParticleMax);
@@ -261,6 +284,19 @@ public class GameBalance : ScriptableObject
     public float GetSmokeHeightRate(int turnTrash)
     {
         return Mathf.Clamp(smokeHeightBase + turnTrash * smokeHeightPerTrash, smokeHeightMin, smokeHeightMax);
+    }
+
+    // ゴミ処理画面に出すゴミ袋の数。切り上げなので、ゴミが1でもあれば1個出る（ゴミ0なら0個）
+    public int GetTrashBagCount(int turnTrash)
+    {
+        if (turnTrash <= 0)
+        {
+            return 0;
+        }
+
+        int perBag = Mathf.Max(trashPerBag, 1);
+
+        return (turnTrash + perBag - 1) / perBag;
     }
 
     // 昇順の閾値のうち、value が到達している個数

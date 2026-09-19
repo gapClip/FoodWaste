@@ -22,8 +22,14 @@ public class MonsterState
         this.data = data;
     }
 
+    // 基礎容量（Lv1 の容量。SPEC 4.1）。エンディングなど、読む側が amountEat の意味を知らなくて済むように
+    public int BaseCapacity => data.amountEat;
+
     // 累計成長ポイントから決まる、いまの成長段階
     public int Level => GameBalance.Instance.GetLevel(data.amountEat, growthPoints);
+
+    // いまの成長段階でのサイズ倍率（容量・お肉の量の倍率。1.00〜2.00。SPEC 4.1）
+    public float SizeMultiplier => GameBalance.Instance.GetSizeMultiplier(Level);
 
     // いまの成長段階での容量（次のターンの容量）
     public int Capacity => GameBalance.Instance.GetCapacity(data.amountEat, Level);
@@ -33,6 +39,10 @@ public class MonsterState
 
     // このターンの見た目の大きさ。シーンに置いた大きさ（Lv5）を 1 とした縦・横の倍率
     public float PlacedScaleAtTurnStart => GameBalance.Instance.GetPlacedScale(levelAtTurnStart);
+
+    // いまの成長段階での見た目の大きさ。シーンに置いた大きさ（Lv5）を 1 とした縦・横の倍率。
+    // 最後のターンの AdvanceTurn() のあとに読めば、最終成長段階の大きさになる（SPEC 3.6.2）
+    public float PlacedScale => GameBalance.Instance.GetPlacedScale(Level);
 
     // このターンに成長段階が上がったか（リザルトの「おおきくなった！」用）
     public bool LeveledUp => Level > levelAtTurnStart;

@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: GameBalance
   m_EditorClassIdentifier: Assembly-CSharp::GameBalance
   turnCount: 10
+  monsters:
+  - {fileID: 11400000, guid: f822fa47981ae58488b3fe7da7f428a5, type: 2}
+  - {fileID: 11400000, guid: 832f2da29398a484aa011362e2ceea22, type: 2}
+  - {fileID: 11400000, guid: 0e6251cb36526cb44ae6c08b74e805fb, type: 2}
   fullnessBase: 4
   meatBonus: 1
   fruitBonus: -1
@@ -69,3 +73,4 @@ MonoBehaviour:
   smokeHeightPerTrash: 0.04
   smokeHeightMin: 0.2
   smokeHeightMax: 1
+  trashPerBag: 5

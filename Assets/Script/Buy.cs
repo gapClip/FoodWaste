@@ -77,6 +77,9 @@ public bool CanPurchase()
                     inventory.AddFood(food);
                 }
 
+                // 今ターンに買った数を記録する（購入上限の判定用。SPEC 6.1）
+                ShopRules.RecordPurchase(food, count);
+
                 // 購入後に0へ戻す
                countBuy.ResetCount();
                 

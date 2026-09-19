@@ -3,7 +3,6 @@ using UnityEngine;
 public class trashCreate : MonoBehaviour
 {
     [SerializeField] private GameObject trashPrefab;
-    [SerializeField] private int trashMeasure = 5;
 
     [SerializeField] private float Minx = -3.5f;
     [SerializeField] private float Maxx = 0f;
@@ -12,8 +11,8 @@ public class trashCreate : MonoBehaviour
 
     void Start()
     {
-        // 今ターンのゴミ量からゴミオブジェクトの数を決める
-        int trashCount = GameState.TurnTrash / trashMeasure;
+        // 今ターンのゴミ量からゴミオブジェクトの数を決める（切り上げ。1袋あたりの量は GameBalance.trashPerBag）
+        int trashCount = GameBalance.Instance.GetTrashBagCount(GameState.TurnTrash);
 
         for (int i = 0; i < trashCount; i++)
         {
