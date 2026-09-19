@@ -17,6 +17,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Incineration.unity
     guid: dd53e117caa256f45ae0f5cfca628843
+  - enabled: 1
+    path: Assets/Scenes/Ending_BJ.unity
+    guid: fafac1c4ef624a34a98ba51b03d01b3b
+  - enabled: 1
+    path: Assets/Scenes/Ending_LF.unity
+    guid: 0ee5a24f49aa738479cf5f84f1080c4a
+  - enabled: 1
+    path: Assets/Scenes/Ending_SF.unity
+    guid: ef61d713babb41b44ac4ec5e8d3116b4
+  - enabled: 1
+    path: Assets/Scenes/Ending_Final.unity
+    guid: d6c5e20281ecaa541b1892549ec9d299
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
