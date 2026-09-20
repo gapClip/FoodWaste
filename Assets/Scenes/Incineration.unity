@@ -736,7 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoGiveFood
   sceneName: GiveFood
-  endingSceneName: 
+  endingSceneName: Ending_BJ
 --- !u!1 &1642126412
 GameObject:
   m_ObjectHideFlags: 0
