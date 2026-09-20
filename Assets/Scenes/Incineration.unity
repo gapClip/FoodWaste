@@ -827,7 +827,6 @@ GameObject:
   - component: {fileID: 1738408289}
   - component: {fileID: 1738408288}
   - component: {fileID: 1738408287}
-  - component: {fileID: 1738408290}
   m_Layer: 0
   m_Name: takibi
   m_TagString: Bonfire
@@ -955,19 +954,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1738408290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1738408286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e6558fda10c6f842ba73c34f080ba61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::trashDrag
-  smokePrefab: {fileID: 0}
 --- !u!1 &1830281665
 GameObject:
   m_ObjectHideFlags: 0

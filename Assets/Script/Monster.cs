@@ -88,7 +88,7 @@ public class Monster : MonoBehaviour
 
         Vector3 randomOffset = new Vector3(
             Random.Range(trashMinX, trashMaxX),
-            -2,
+            2f,
             0f
         );
 

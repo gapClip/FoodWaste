@@ -875,8 +875,8 @@ MonoBehaviour:
   trash: {fileID: 3756849694332147661, guid: 6d7b7b71f93852840a8b0a64a3f01bd8, type: 3}
   trashMinX: -1.5
   trashMaxX: 1.5
-  trashMinY: -0.5
-  trashMaxY: 0.5
+  trashMinY: 0
+  trashMaxY: 0
 --- !u!58 &479528868
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1109,7 +1109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -846, y: -412.12}
+  m_AnchoredPosition: {x: -489, y: -412.12}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &576316419
@@ -1884,10 +1884,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29138c083409ac14097bb0f9676e3ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  item:
-    food: {fileID: 0}
-    ownedCount: 0
-    selectedCount: 0
 --- !u!225 &741357536
 CanvasGroup:
   m_ObjectHideFlags: 0
