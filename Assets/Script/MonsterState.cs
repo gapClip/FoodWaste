@@ -71,4 +71,21 @@ public class MonsterState
             return capacity > 0 ? Mathf.Clamp01((float)eatenThisTurn / capacity) : 0f;
         }
     }
+   
+
+   public float growthRate//10/17追加
+{
+    get
+    {
+        float baseCapacity = data.amountEat;
+
+        if (baseCapacity <= 0)
+            return 0f;
+
+        float maxGrowth = baseCapacity * 13f;
+
+        return Mathf.Clamp01(growthPoints / maxGrowth);
+    }
+}
+
 }

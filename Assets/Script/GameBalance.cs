@@ -27,7 +27,7 @@ public class GameBalance : ScriptableObject
     }
 
     [Header("ターン")]
-    public int turnCount = 10;
+    public int turnCount = 6;//10/19変更
 
     [Header("動物（SPEC 4章）")]
     [Tooltip("ゲームに登場する動物の全員。結果画面・エンディングで、まだシーンから登録されていない動物も含めて必ず全員を返すために使う（GameState.GetMonsterStates）。並び順は問わない（MonsterData.resultOrder の順に並べ直す）")]
@@ -60,6 +60,12 @@ public class GameBalance : ScriptableObject
     public float likeSatisfaction = 1f;
     public float normalSatisfaction = 0f;
     public float hateSatisfaction = -2f;
+
+    [Header("食欲係数（満腹度にかける。9/24追加）")]
+    [SerializeField] private float loveAppetite = 0.8f;
+    [SerializeField] private float likeAppetite = 0.9f;
+    [SerializeField] private float normalAppetite = 1.0f;
+    [SerializeField] private float hateAppetite = 2.0f;
 
     [Header("満足度")]
     [Tooltip("給餌でこぼれたゴミ1につき")]
@@ -195,29 +201,88 @@ public class GameBalance : ScriptableObject
         };
     }
 
+    public float GetAppetiteCoefficient(FoodPreference preference)//9/24追加
+    {
+        return preference switch
+        {
+            FoodPreference.大好き => loveAppetite,
+            FoodPreference.好き => likeAppetite,
+            FoodPreference.普通 => normalAppetite,
+            //FoodPreference.嫌い => normalAppetite,
+            FoodPreference.大嫌い => hateAppetite,
+            _ => normalAppetite,
+        };
+    }
+
     // 1個与えたときの結果（SPEC 8.1）
-    // remainingCapacity：その動物の残り容量（0 のときは与えられないので呼ばない）
-    public FeedResult CalculateFeed(FoodPreference preference, int fullness, int remainingCapacity)
+    // remainingAppetite：その動物の残り食欲 9/24追加
+    public FeedResult CalculateFeed(
+        FoodPreference preference,
+        int fullness,
+        float remainingAppetite)
     {
         FeedResult result = new FeedResult();
+
         result.preference = preference;
 
-        // 大嫌い：食べずにそのまま残す（満腹度がまるごとゴミ）
-        if (preference == FoodPreference.大嫌い)
+        // 食欲の消費量
+        float appetiteCost =
+            fullness * GetAppetiteCoefficient(preference);
+
+        
+
+        // ----------------------------------------
+        // 食べられる量を食欲から計算
+        // ----------------------------------------
+
+        if (appetiteCost <= remainingAppetite)
         {
-            result.eaten = 0;
-            result.trash = fullness;
-            result.satisfaction = RoundToTenth(hateSatisfaction * fullness);
-            result.growth = 0f;
-            return result;
+            // 全部食べられる
+            result.eaten = Mathf.FloorToInt(fullness * GetAppetiteCoefficient(preference));
+            result.trash = 0;
+        }
+        else
+        {
+            // 食欲が足りない場合
+            float edibleRatio =
+                remainingAppetite / appetiteCost;
+
+            result.eaten =
+                Mathf.FloorToInt(
+                    fullness * edibleRatio
+                );
+
+            result.eaten =
+                Mathf.Clamp(
+                    result.eaten,
+                    0,
+                    fullness
+                );
+
+            result.trash =
+                fullness - result.eaten;
         }
 
-        // 食べている途中で満腹になった分はゴミになる
-        result.eaten = Mathf.Min(fullness, Mathf.Max(remainingCapacity, 0));
-        result.trash = fullness - result.eaten;
-        result.satisfaction = RoundToTenth(
-            GetSatisfactionCoefficient(preference) * result.eaten + spillPenalty * result.trash);
-        result.growth = RoundToTenth(GetGrowthCoefficient(preference) * result.eaten);
+        // ----------------------------------------
+        // 満足度
+        // ----------------------------------------
+
+        result.satisfaction =
+            RoundToTenth(
+                GetSatisfactionCoefficient(preference)
+                * result.eaten
+                + spillPenalty * result.trash
+            );
+
+        // ----------------------------------------
+        // 成長
+        // ----------------------------------------
+
+        result.growth =
+            RoundToTenth(
+                GetGrowthCoefficient(preference)
+                * result.eaten
+            );
 
         return result;
     }

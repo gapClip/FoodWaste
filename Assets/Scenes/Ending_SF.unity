@@ -1130,6 +1130,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SnakeHaze_toGame
       objectReference: {fileID: 0}
+    - target: {fileID: -7993077287977373861, guid: 14b1cd852db3f5b4f840e32feb23e5bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 14b1cd852db3f5b4f840e32feb23e5bf, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.64
@@ -1185,6 +1189,18 @@ PrefabInstance:
     - target: {fileID: -7552582706839291426, guid: 14b1cd852db3f5b4f840e32feb23e5bf, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3767053282624066860, guid: 14b1cd852db3f5b4f840e32feb23e5bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2208727111478901077, guid: 14b1cd852db3f5b4f840e32feb23e5bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4604016289625600167, guid: 14b1cd852db3f5b4f840e32feb23e5bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

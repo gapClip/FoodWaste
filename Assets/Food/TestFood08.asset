@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestFood08
   m_EditorClassIdentifier: Assembly-CSharp::FoodData
   foodName: "\u307B\u3057\u9B5A"
-  foodSprite: {fileID: 21300000, guid: 57520b91b98971a4e90a48bc730c823d, type: 3}
+  foodSprite: {fileID: 21300000, guid: 575191112885ff14cba73771cedd6021, type: 3}
   category: 2
   texture: 1

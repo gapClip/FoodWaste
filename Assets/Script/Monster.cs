@@ -5,12 +5,15 @@ public class Monster : MonoBehaviour
     private MonsterStatus monsterStatus;
     private Animator animator;
     [SerializeField] private GameObject trash;
+    [SerializeField] private Collider2D monsterCollider;
 
     [SerializeField] private float trashMinX = -1.5f;
     [SerializeField] private float trashMaxX = 1.5f;
     [SerializeField] private float trashMinY = -0.5f;
     [SerializeField] private float trashMaxY = 0.5f;
 
+    [SerializeField] private GameObject zzzPrefab; // 追加: zzzPrefabをインスペクターで設定できるようにする
+private bool zzzSpawned = false;
     void Awake()
     {
         monsterStatus = GetComponent<MonsterStatus>();
@@ -25,6 +28,7 @@ public class Monster : MonoBehaviour
         // 残り容量が0のときは与えられない（残り1でも与えられる）
         if (remaining <= 0)
         {
+            monsterStatus.isSleeping = true;//9/25追加
             Debug.Log("これ以上食べられません！");
             return false;
         }
@@ -39,6 +43,19 @@ public class Monster : MonoBehaviour
             preference, food.amount, remaining);
 
         monsterStatus.currentAmountEat += result.eaten;
+
+        // 食欲を使い切ったら眠る
+        if (monsterStatus.currentAmountEat >=
+            monsterStatus.maxAmountEat)
+        {
+            monsterStatus.currentAmountEat =
+                monsterStatus.maxAmountEat;
+
+            monsterStatus.isSleeping = true;
+            monsterStatus.SetSleeping(true);
+            SpawnZzz();
+        }
+
         // 小数の誤差で閾値（例：成長40）を取りこぼさないよう、足したあとも小数第1位で丸める
         state.satisfaction = GameBalance.RoundToTenth(state.satisfaction + result.satisfaction);
         state.growthPoints = GameBalance.RoundToTenth(state.growthPoints + result.growth);
@@ -96,4 +113,17 @@ public class Monster : MonoBehaviour
 
         Instantiate(trash, spawnPosition, Quaternion.identity);
     }
+
+    private void SpawnZzz()
+{
+    if (zzzSpawned || zzzPrefab == null) return;
+
+    zzzSpawned = true;
+
+    Vector3 spawnPosition = monsterCollider != null
+        ? monsterCollider.bounds.center
+        : transform.position;
+
+    Instantiate(zzzPrefab, spawnPosition, Quaternion.identity);
+}
 }

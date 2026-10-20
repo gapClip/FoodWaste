@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b403064b0824a47a8d569e27ef72a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoNewGame
-  sceneName: GiveFood
+  sceneName: prologue
 --- !u!114 &590542966
 MonoBehaviour:
   m_ObjectHideFlags: 0

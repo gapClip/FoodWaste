@@ -1565,7 +1565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RFETest
   targetMonster: {fileID: 11400000, guid: 832f2da29398a484aa011362e2ceea22, type: 2}
-  testLevel: 5
+  testLevel: 1
   testTasteRank: 5
   co2: 0
 --- !u!4 &1774265656
