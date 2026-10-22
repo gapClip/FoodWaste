@@ -62,8 +62,8 @@ public class GameBalance : ScriptableObject
     public float hateSatisfaction = -2f;
 
     [Header("食欲係数（満腹度にかける。9/24追加）")]
-    [SerializeField] private float loveAppetite = 0.8f;
-    [SerializeField] private float likeAppetite = 0.9f;
+    [SerializeField] private float loveAppetite = 0.9f;
+    [SerializeField] private float likeAppetite = 1.0f;
     [SerializeField] private float normalAppetite = 1.0f;
     [SerializeField] private float hateAppetite = 2.0f;
 
@@ -85,7 +85,7 @@ public class GameBalance : ScriptableObject
 
     [Header("CO₂")]
     [Tooltip("段階1〜5に上がる累計CO₂")]
-    public int[] co2StageThresholds = { 10, 25, 45, 70, 100 };
+    public int[] co2StageThresholds = { 5, 12, 25, 40, 60 };
     [Tooltip("汚れ度 t = 累計CO₂ ÷ この値")]
     public int pollutionDenominator = 100;
     [Tooltip("段階が上がったときの暗転時間（秒）")]

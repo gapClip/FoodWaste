@@ -69,8 +69,8 @@ private bool zzzSpawned = false;
             SpawnTrash();
         }
 
-        Debug.Log($"{food.foodName} を与えた（{preference}）　食べた量: {monsterStatus.currentAmountEat}/{monsterStatus.maxAmountEat}　ゴミ: {result.trash}");
-        Debug.Log($"満足度: {state.satisfaction}　成長ポイント: {state.growthPoints}");
+        // Debug.Log($"{food.foodName} を与えた（{preference}）　食べた量: {monsterStatus.currentAmountEat}/{monsterStatus.maxAmountEat}　ゴミ: {result.trash}");
+        // Debug.Log($"満足度: {state.satisfaction}　成長ポイント: {state.growthPoints}");
 
         return true;
     }

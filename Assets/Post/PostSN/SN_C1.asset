@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SN_C1
   m_EditorClassIdentifier: Assembly-CSharp::SNSPostData
   threshold: 0
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: cbf613c225423c447be202999fe78662, type: 3}
   text: "\u3042\u306E\u755C\u820E\u9177\u3044\u3088\u2026\r\n\u3082\u3046\u7121\u7406\u5F15\u3063\u8D8A\u3059\u2026"

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LF_T3
   m_EditorClassIdentifier: Assembly-CSharp::SNSPostData
   threshold: 0
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 216e7aa01c831d24097facf7db60593d, type: 3}
   text: "\u30B6\u30FB\u73CD\u5473\u3068\u3044\u3046\u4E0D\u601D\u8B70\u306A\u5473\u3002\u5909\u308F\u3063\u305F\u3082\u306E\u304C\u98DF\u3079\u305F\u3044\u306A\u3089\u8CB7\u3063\u305F\u3089\u3044\u3044\u3093\u3058\u3083\u306A\u3044\uFF1F"

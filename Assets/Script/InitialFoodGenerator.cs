@@ -201,16 +201,16 @@ public class InitialFoodGenerator : MonoBehaviour
                     remainingFullness
                 );
 
-            Debug.Log(
-                "初期食料：" +
-                food.foodName +
-                " × " +
-                count +
-                "個" +
-                "（満腹度 " +
-                addedFullness +
-                "）"
-            );
+            // Debug.Log(
+            //     "初期食料：" +
+            //     food.foodName +
+            //     " × " +
+            //     count +
+            //     "個" +
+            //     "（満腹度 " +
+            //     addedFullness +
+            //     "）"
+            // );
         }
 
         // ----------------------------------------

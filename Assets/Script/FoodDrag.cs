@@ -17,6 +17,35 @@ public class FoodDrag : MonoBehaviour,
     // 持ち上げている1個（カーソルについてくるアイコン）
     private RectTransform dragIcon;
 
+    private AudioSource audioSource;
+    private AudioClip dragSE;
+
+void Start()
+{
+    // シーン内のSEManagerを取得
+    GameObject manager = GameObject.Find("SEManager");
+
+    if (manager == null)
+    {
+        Debug.LogError("シーン内にSEManagerがありません！");
+        return;
+    }
+
+    audioSource = manager.GetComponent<AudioSource>();
+
+    if (audioSource == null)
+    {
+        Debug.LogError("SEManagerにAudioSourceがありません！");
+        return;
+    }
+
+    dragSE = Resources.Load<AudioClip>("SEDrag");
+
+    if (dragSE == null)
+    {
+        Debug.LogError("Resources/SE/Drag の音源が見つかりません！");
+    }
+}
     void Awake()
     {
         slotUI = GetComponent<FoodSlotUI>();
@@ -39,6 +68,8 @@ public class FoodDrag : MonoBehaviour,
         // 1個持ち上げる
         slotUI.item.count--;
         slotUI.Refresh();
+
+        PlaySE();
 
         dragIcon = CreateDragIcon();
         MoveDragIcon(eventData);
@@ -122,4 +153,14 @@ public class FoodDrag : MonoBehaviour,
 
         dragIcon.localPosition = localPoint;
     }
+
+   private void PlaySE()
+{
+    if (audioSource == null || dragSE == null)
+    {
+        return;
+    }
+
+    audioSource.PlayOneShot(dragSE);
+}
 }

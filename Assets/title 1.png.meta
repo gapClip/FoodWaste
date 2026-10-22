@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e58c2a6688b9fcb4bba454216e7c498a
+guid: e32256c7a6a5adf4b9f21193aa4d7af8
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -32,18 +32,6 @@ TextureImporter:
   - first:
       213: -954477957450887664
     second: title_9
-  - first:
-      213: 9077172329364265620
-    second: title_10
-  - first:
-      213: -3010302418198178162
-    second: title_11
-  - first:
-      213: 7104359310992645417
-    second: title_12
-  - first:
-      213: -8255546105219972060
-    second: title_13
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,10 +130,10 @@ TextureImporter:
       name: title_0
       rect:
         serializedVersion: 2
-        x: 72
-        y: 31
+        x: 17
+        y: 95
         width: 105
-        height: 146
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,10 +152,10 @@ TextureImporter:
       name: title_1
       rect:
         serializedVersion: 2
-        x: 192
-        y: 29
-        width: 127
-        height: 150
+        x: 29
+        y: 52
+        width: 75
+        height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,10 +174,10 @@ TextureImporter:
       name: title_2
       rect:
         serializedVersion: 2
-        x: 332
-        y: 29
-        width: 134
-        height: 150
+        x: 299
+        y: 13
+        width: 102
+        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,10 +196,10 @@ TextureImporter:
       name: title_3
       rect:
         serializedVersion: 2
-        x: 598
-        y: 31
-        width: 100
-        height: 146
+        x: 421
+        y: 17
+        width: 64
+        height: 117
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,10 +218,10 @@ TextureImporter:
       name: title_4
       rect:
         serializedVersion: 2
-        x: 715
-        y: 151
-        width: 25
-        height: 25
+        x: 483
+        y: 18
+        width: 64
+        height: 89
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,10 +240,10 @@ TextureImporter:
       name: title_5
       rect:
         serializedVersion: 2
-        x: 986
-        y: 29
-        width: 116
-        height: 150
+        x: 508
+        y: 97
+        width: 41
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -274,10 +262,10 @@ TextureImporter:
       name: title_6
       rect:
         serializedVersion: 2
-        x: 1111
-        y: 29
-        width: 71
-        height: 139
+        x: 718
+        y: 13
+        width: 102
+        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -296,10 +284,10 @@ TextureImporter:
       name: title_7
       rect:
         serializedVersion: 2
-        x: 1425
-        y: 30
-        width: 97
-        height: 146
+        x: 10
+        y: 12
+        width: 112
+        height: 49
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,10 +306,10 @@ TextureImporter:
       name: title_8
       rect:
         serializedVersion: 2
-        x: 483
-        y: 25
-        width: 45
-        height: 73
+        x: 145
+        y: 58
+        width: 121
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -340,10 +328,10 @@ TextureImporter:
       name: title_9
       rect:
         serializedVersion: 2
-        x: 715
-        y: 30
-        width: 25
-        height: 104
+        x: 563
+        y: 58
+        width: 121
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -354,94 +342,6 @@ TextureImporter:
       bones: []
       spriteID: 01e0330da5301c2f0800000000000000
       internalID: -954477957450887664
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: title_10
-      rect:
-        serializedVersion: 2
-        x: 754
-        y: 31
-        width: 107
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 49a13c0042898fd70800000000000000
-      internalID: 9077172329364265620
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: title_11
-      rect:
-        serializedVersion: 2
-        x: 869
-        y: 29
-        width: 102
-        height: 108
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e865cc066e14936d0800000000000000
-      internalID: -3010302418198178162
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: title_12
-      rect:
-        serializedVersion: 2
-        x: 1190
-        y: 29
-        width: 106
-        height: 108
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 92d94702721c79260800000000000000
-      internalID: 7104359310992645417
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: title_13
-      rect:
-        serializedVersion: 2
-        x: 1309
-        y: 29
-        width: 101
-        height: 108
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 424018b9e886e6d80800000000000000
-      internalID: -8255546105219972060
       vertices: []
       indices: 
       edges: []
@@ -462,10 +362,6 @@ TextureImporter:
     nameFileIdTable:
       title_0: 4369572136041557648
       title_1: 3918735734063839423
-      title_10: 9077172329364265620
-      title_11: -3010302418198178162
-      title_12: 7104359310992645417
-      title_13: -8255546105219972060
       title_2: 8126443836680682420
       title_3: -1799187036485144362
       title_4: 6959973565247811803
